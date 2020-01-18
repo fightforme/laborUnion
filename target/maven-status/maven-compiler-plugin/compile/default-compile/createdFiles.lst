@@ -1,0 +1,5 @@
+com\hhcq\laborUnion\controller\EmployeeInfoController.class
+com\hhcq\laborUnion\dao\EmployeeInfoMapper.class
+com\hhcq\laborUnion\service\EmployeeInfoService.class
+com\hhcq\laborUnion\domain\EmployeeInfo.class
+com\hhcq\laborUnion\service\impl\EmployeeInfoServiceImpl.class

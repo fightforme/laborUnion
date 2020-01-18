@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhcq.laborUnion.dao.EmployeeInfoMapper">
+  <resultMap id="BaseResultMap" type="com.hhcq.laborUnion.domain.EmployeeInfo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
+    <result column="createUser" jdbcType="VARCHAR" property="createuser" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifydate" />
+    <result column="modifyUser" jdbcType="VARCHAR" property="modifyuser" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="on_job" jdbcType="INTEGER" property="onJob" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="permiss" jdbcType="VARCHAR" property="permiss" />
+    <result column="tel_no" jdbcType="VARCHAR" property="telNo" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="verison" jdbcType="INTEGER" property="verison" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, birthday, createDate, createUser, gender, modifyDate, modifyUser, nick_name, 
+    on_job, open_id, permiss, tel_no, user_name, verison
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lu_employee_info
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+<!--   <select id="selectByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lu_employee_info
+    where open_id = #{open_id,jdbcType=VARCHAR}
+  </select> -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from lu_employee_info
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.hhcq.laborUnion.domain.EmployeeInfo">
+    insert into lu_employee_info (id, birthday, createDate, 
+      createUser, gender, modifyDate, 
+      modifyUser, nick_name, on_job, 
+      open_id, permiss, tel_no, 
+      user_name, verison)
+    values (#{id,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{createuser,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{modifydate,jdbcType=TIMESTAMP}, 
+      #{modifyuser,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{onJob,jdbcType=INTEGER}, 
+      #{openId,jdbcType=VARCHAR}, #{permiss,jdbcType=VARCHAR}, #{telNo,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{verison,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hhcq.laborUnion.domain.EmployeeInfo">
+    insert into lu_employee_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="createdate != null">
+        createDate,
+      </if>
+      <if test="createuser != null">
+        createUser,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="modifydate != null">
+        modifyDate,
+      </if>
+      <if test="modifyuser != null">
+        modifyUser,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="onJob != null">
+        on_job,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="permiss != null">
+        permiss,
+      </if>
+      <if test="telNo != null">
+        tel_no,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="verison != null">
+        verison,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuser != null">
+        #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="modifydate != null">
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyuser != null">
+        #{modifyuser,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="onJob != null">
+        #{onJob,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="permiss != null">
+        #{permiss,jdbcType=VARCHAR},
+      </if>
+      <if test="telNo != null">
+        #{telNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="verison != null">
+        #{verison,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hhcq.laborUnion.domain.EmployeeInfo">
+    update lu_employee_info
+    <set>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdate != null">
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuser != null">
+        createUser = #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="modifydate != null">
+        modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyuser != null">
+        modifyUser = #{modifyuser,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="onJob != null">
+        on_job = #{onJob,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="permiss != null">
+        permiss = #{permiss,jdbcType=VARCHAR},
+      </if>
+      <if test="telNo != null">
+        tel_no = #{telNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="verison != null">
+        verison = #{verison,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hhcq.laborUnion.domain.EmployeeInfo">
+    update lu_employee_info
+    set birthday = #{birthday,jdbcType=TIMESTAMP},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      createUser = #{createuser,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      modifyUser = #{modifyuser,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      on_job = #{onJob,jdbcType=INTEGER},
+      open_id = #{openId,jdbcType=VARCHAR},
+      permiss = #{permiss,jdbcType=VARCHAR},
+      tel_no = #{telNo,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      verison = #{verison,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
