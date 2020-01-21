@@ -31,6 +31,8 @@ public class EmployeeInfo {
 
     private Integer verison;
 
+    private String password;
+
     public String getId() {
         return id;
     }
@@ -141,5 +143,13 @@ public class EmployeeInfo {
 
     public void setVerison(Integer verison) {
         this.verison = verison;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 }

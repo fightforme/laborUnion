@@ -46,6 +46,44 @@
     <bean id="transactionManager"    
         class="org.springframework.jdbc.datasource.DataSourceTransactionManager">    
         <property name="dataSource" ref="dataSource" />    
-    </bean>    
+    </bean>  
     
+    
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    <property name="securityManager" ref="securityManager"/>
+    <property name="loginUrl" value="login.html" />
+    <property name="successUrl" value="loginIn.html" />
+    <property name="unauthorizedUrl" value="403.html"/>
+    <property name="filterChainDefinitions">
+        <value>
+            /login.html = anon
+            /loginIn.html = anon
+            /testRole = roles["admin"]
+            /testRole1 = roles["admin","admin1"]
+            /testPerms = perms["user:delete"]
+            /testPerms1 = perms["user:delete","user:update"]
+            /* = authc
+        </value>
+    </property>
+	</bean>
+
+	<!--创建SecurityManager对象-->
+	<bean class="org.apache.shiro.web.mgt.DefaultWebSecurityManager" id="securityManager">
+	    <property name="realm" ref="realm"/>
+	</bean>
+	
+	<bean class="com.hhcq.laborUnion.shiro.realm.CustomRealm" id="realm">
+	    <property name="credentialsMatcher" ref="credentialsMatcher" />
+	</bean>
+	<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher"
+	      id="credentialsMatcher">
+	    <property name="hashAlgorithmName" value="md5" />
+	    <property name="hashIterations" value="1" />
+	</bean>
+	
+	
+	<bean class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+    	<property name="securityManager" ref="securityManager" />
+	</bean>
 </beans>

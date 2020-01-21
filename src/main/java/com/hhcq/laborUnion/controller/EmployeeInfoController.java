@@ -8,7 +8,15 @@
 */
 package com.hhcq.laborUnion.controller;
 
+import java.util.Map;
+
+
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +41,7 @@ public class EmployeeInfoController {
 	private static Logger logger = Logger.getLogger(EmployeeInfoController.class);  
 	 
 	    @RequestMapping(value = "/employeeInfo", method = RequestMethod.GET)
-	    public ModelAndView login(@RequestParam(value="id",required=true) String openId) {
+	    public ModelAndView employeeInfo(@RequestParam(value="id",required=true) String openId) {
 	    	logger.info("sdfds");
 	        EmployeeInfo employeeInfo = employeeInfoService.getEmployeeInfoByOpenId(openId);
 	        ModelAndView mav = new ModelAndView();
@@ -50,5 +58,42 @@ public class EmployeeInfoController {
 	            mav.setViewName("success");
 	            return mav;
 	        }
+	    }
+	    
+	    @RequestMapping(value = "/login", method = RequestMethod.GET)
+	    public String login(@RequestParam(value="id",required=false) String openId,Map<String, Object> model) {
+	    	logger.info("sdfds");
+	    	model.put("msg", "工会系统，请输入账号密码");
+	        return "login";
+	        
+	    }
+	    
+	    @RequestMapping(value = "/loginIn", method = RequestMethod.POST)
+	    public String loginIn(@RequestParam(value="userName",required=true) String userName,@RequestParam(value="password",required=true) String password, Map<String, Object> model) {
+	    	logger.info("sdfds");
+	        logger.info(userName+password);
+	        Subject subject = SecurityUtils.getSubject();
+	        
+	        EmployeeInfo employeeInfo = employeeInfoService.getEmployeeInfoByUsernameAndPassword(userName,password);
+
+	        logger.info(ReflectionToStringBuilder.toString(employeeInfo));
+
+	        UsernamePasswordToken token = new UsernamePasswordToken(employeeInfo.getUserName(),
+	        		employeeInfo.getPassword());
+	        try {
+	            subject.login(token);
+		        model.put("id", employeeInfo.getId());
+		        model.put("name", employeeInfo.getUserName());
+		        model.put("gender", employeeInfo.getGender());
+		        model.put("birthday", employeeInfo.getBirthday());
+	        } catch (AuthenticationException e) {
+	            return e.getMessage();
+	        }
+	        if(subject.hasRole("admin")){
+	        	 return "success";
+	        }
+	        
+	        return "success"; 
+	       
 	    }
 }

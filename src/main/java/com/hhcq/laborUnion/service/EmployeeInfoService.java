@@ -22,4 +22,14 @@ public interface EmployeeInfoService {
 	 * 根据openId获取员工信息
 	 */
 	public EmployeeInfo getEmployeeInfoByOpenId(String openId);
+	
+	/**
+	 * 根据用户名和密码查询用户
+	 * */
+	public EmployeeInfo getEmployeeInfoByUsernameAndPassword(String userName,String password);
+	
+	/**
+	 * 根据用户名查询用户
+	 * */
+	public EmployeeInfo getEmployeeInfoByUsername(String userName);
 }

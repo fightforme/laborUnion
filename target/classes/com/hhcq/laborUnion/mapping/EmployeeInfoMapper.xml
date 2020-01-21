@@ -16,10 +16,11 @@
     <result column="tel_no" jdbcType="VARCHAR" property="telNo" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="verison" jdbcType="INTEGER" property="verison" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
   </resultMap>
   <sql id="Base_Column_List">
     id, birthday, createDate, createUser, gender, modifyDate, modifyUser, nick_name, 
-    on_job, open_id, permiss, tel_no, user_name, verison
+    on_job, open_id, permiss, tel_no, user_name, verison, password
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -27,12 +28,19 @@
     from lu_employee_info
     where id = #{id,jdbcType=VARCHAR}
   </select>
-<!--   <select id="selectByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByUserNameAndPassword" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from lu_employee_info
-    where open_id = #{open_id,jdbcType=VARCHAR}
-  </select> -->
+    where user_name = #{userName,jdbcType=VARCHAR}
+    and password = #{password,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lu_employee_info
+    where user_name = #{userName,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from lu_employee_info
     where id = #{id,jdbcType=VARCHAR}
@@ -42,12 +50,14 @@
       createUser, gender, modifyDate, 
       modifyUser, nick_name, on_job, 
       open_id, permiss, tel_no, 
-      user_name, verison)
+      user_name, verison, password
+      )
     values (#{id,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, #{createdate,jdbcType=TIMESTAMP}, 
       #{createuser,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{modifydate,jdbcType=TIMESTAMP}, 
       #{modifyuser,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{onJob,jdbcType=INTEGER}, 
       #{openId,jdbcType=VARCHAR}, #{permiss,jdbcType=VARCHAR}, #{telNo,jdbcType=VARCHAR}, 
-      #{userName,jdbcType=VARCHAR}, #{verison,jdbcType=INTEGER})
+      #{userName,jdbcType=VARCHAR}, #{verison,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.hhcq.laborUnion.domain.EmployeeInfo">
     insert into lu_employee_info
@@ -94,6 +104,9 @@
       <if test="verison != null">
         verison,
       </if>
+      <if test="password != null">
+        password,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -137,6 +150,9 @@
       </if>
       <if test="verison != null">
         #{verison,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -182,6 +198,9 @@
       <if test="verison != null">
         verison = #{verison,jdbcType=INTEGER},
       </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -199,7 +218,8 @@
       permiss = #{permiss,jdbcType=VARCHAR},
       tel_no = #{telNo,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
-      verison = #{verison,jdbcType=INTEGER}
+      verison = #{verison,jdbcType=INTEGER},
+      password = #{password,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -8,6 +8,8 @@
 */
 package com.hhcq.laborUnion.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,14 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	
 	public EmployeeInfo getEmployeeInfoByOpenId(String openId) {
 		return employeeInfoMapper.selectByPrimaryKey(openId);
+	}
+
+	public EmployeeInfo getEmployeeInfoByUsernameAndPassword(String userName,String password) {
+		return employeeInfoMapper.selectByUserNameAndPassword(userName, password);
+	}
+
+	public EmployeeInfo getEmployeeInfoByUsername(String userName) {
+		return employeeInfoMapper.selectByUserName(userName).get(0);
 	}
 
 }
